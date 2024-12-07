@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+package translate.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "translate/api/translate/v1;v1";
+
+// The task service definition.
+service Task {
+	// Create a task
+	rpc CreateTask (CreateTaskRequest) returns (CreateTaskResponse) {
+		option (google.api.http) = {
+			post: "/tasks"
+		};
+	}
+
+	rpc ExecuteTranslationTask(ExecuteTranslationTaskRequest) returns (ExecuteTranslationTaskRequestResponse) {
+		option (google.api.http) = {
+			post: "/tasks/{task_id}/translate"
+		};
+	}
+
+	rpc DownloadTranslatedContent(DownloadTranslatedContentRequest) returns (DownloadTranslatedContentResponse) {
+		option (google.api.http) = {
+			get: "/tasks/{task_id}"
+		};
+	}
+
+
+	rpc GetTaskDetail(GetTaskDetailRequest) returns (GetTaskDetailResponse) {
+		option (google.api.http) = {
+			get: "/tasks/{task_id}/download"
+		};
+	}
+	rpc RegisterUser (RegisterUserRequest) returns (RegisterUserResponse) {
+		option (google.api.http) = {
+			post: "/tasks"
+		};
+	}
+	rpc UserLogin(UserLoginRequest) returns (UserLoginResponse) {
+		option (google.api.http) = {
+			post: "/tasks/{task_id}/translate"
+		};
+	}
+}
+
+// The request message containing the user's name.
+message CreateTaskRequest {
+}
+
+message CreateTaskResponse{
+	string taskId = 1;
+}
+
+message ExecuteTranslationTaskRequest {
+	string taskId = 1;
+	string content = 2;
+}
+
+message ExecuteTranslationTaskRequestResponse {
+}
+
+message GetTaskDetailRequest{
+	string taskId = 1;
+}
+
+message GetTaskDetailResponse {
+	string taskId = 1;
+	int32  status = 2;
+	string executeContent = 3;
+}
+
+message DownloadTranslatedContentRequest {
+	string taskId = 1;
+}
+
+message DownloadTranslatedContentResponse{
+	string taskId = 1;
+	string content = 2;
+}
+
+message	RegisterUserRequest {
+	string userName = 1;
+	string pwd =2;
+}
+
+message RegisterUserResponse {
+	int64 userId = 1;
+}
+
+message UserLoginRequest {
+	string userName = 1;
+	string pwd =2;
+}
+
+message UserLoginResponse {
+	string token = 1;
+}
+
+
