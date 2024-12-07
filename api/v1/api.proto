@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package translate.v1;
+package api.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "translate/api/translate/v1;v1";
+option go_package = "api/v1;v1";
 
 // The task service definition.
 service Task {
@@ -35,12 +35,12 @@ service Task {
 	}
 	rpc RegisterUser (RegisterUserRequest) returns (RegisterUserResponse) {
 		option (google.api.http) = {
-			post: "/tasks"
+			post: "/auth/users"
 		};
 	}
 	rpc UserLogin(UserLoginRequest) returns (UserLoginResponse) {
 		option (google.api.http) = {
-			post: "/tasks/{task_id}/translate"
+			post: "/auth/login"
 		};
 	}
 }
@@ -50,11 +50,11 @@ message CreateTaskRequest {
 }
 
 message CreateTaskResponse{
-	string taskId = 1;
+	int64 task_id = 1;
 }
 
 message ExecuteTranslationTaskRequest {
-	string taskId = 1;
+	int64 task_id = 1;
 	string content = 2;
 }
 
@@ -62,35 +62,35 @@ message ExecuteTranslationTaskRequestResponse {
 }
 
 message GetTaskDetailRequest{
-	string taskId = 1;
+	int64 task_id = 1;
 }
 
 message GetTaskDetailResponse {
-	string taskId = 1;
+	int64 task_id = 1;
 	int32  status = 2;
-	string executeContent = 3;
+	string execute_content = 3;
 }
 
 message DownloadTranslatedContentRequest {
-	string taskId = 1;
+	int64 task_id = 1;
 }
 
 message DownloadTranslatedContentResponse{
-	string taskId = 1;
+	int64 task_id = 1;
 	string content = 2;
 }
 
 message	RegisterUserRequest {
-	string userName = 1;
+	string user_name = 1;
 	string pwd =2;
 }
 
 message RegisterUserResponse {
-	int64 userId = 1;
+	int64 user_id = 1;
 }
 
 message UserLoginRequest {
-	string userName = 1;
+	string user_name = 1;
 	string pwd =2;
 }
 
